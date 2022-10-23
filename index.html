@@ -6,10 +6,7 @@
     <title>MoonTalk</title>
     <style>  
       body {
-        margin: 10px;
-      }
-      h1.intro {
-        color:blue;
+        margin: 0;
       }
 
       p.name {
@@ -23,6 +20,14 @@
 
       ul{
         padding-inline-start: 20px;
+      }
+
+      input{
+        margin:8px;
+      }
+
+      select{
+        margin:8px;
       }
 
     </style>
@@ -72,42 +77,54 @@
         </ul>
 
       <div>
-      </div>
-      </div>
-
-      <div style="display:flex;
-      background-color: #2678AB">
-&nbsp&nbsp
-
-        <select style="
-        height:24px;
-        width: 66px;"
-          id="sender">
-          <option value="onj">欧奈酱</option>
-          <option value="odd">>欧豆豆</option>
-        </select>
-&nbsp&nbsp&nbsp&nbsp
-
-        <input style="
-        height:100px;
-        width: 340px;
-          id="msg"
-        >
-        </input>
-&nbsp&nbsp
-
-        <input style="
-        height:25px;
-        width: 66px;
-        "
-          id="sendbutton" type="button" value="发送"
-          onclick="send()"
-          >
-          <!--
-            <script>
-            document.getElementById("sendbutton").align="bottom";
-            </script>
+        <!--
+            待开发功能~
           -->
+      </div>
+      </div>
+
+      <div style="display: flex;
+      background-color: #2678AB;
+      padding:8px
+      ">
+&nbsp&nbsp&nbsp
+
+        <div>
+          <input style="
+          height:100px;
+          width: 320px;
+            id="msg"
+          >
+          </input>
+        </div>
+&nbsp&nbsp
+
+        <div style="
+        display: flex;
+        flex-direction: column;
+        margin:8px;
+        ">
+          <select style="
+          height:24px;
+          width: 65px;"
+            id="sender">
+            <option value="onj">欧奈酱</option>
+            <option value="odd">>欧豆豆</option>
+          </select>
+          
+          <input style="
+          height:25px;
+          width: 65px;
+          "
+            id="sendbutton" type="button" value="发送"
+            onclick="send()"
+            >
+            <!--
+              <script>
+              document.getElementById("sendbutton").align="bottom";
+              </script>
+            -->
+        </div>
       </div>
 
       <script>
