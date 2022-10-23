@@ -1,38 +1,86 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<script src="index.js"></script>
-<div>
-    <ul style="background: #39C5BB;width: 90">
-        <li>
-            <div>
-                <p style="color:#FFF;border: solid 2px">20:55 欧豆豆：</p>
-                <p>爱你爱你!!</p>
-            </div>
-        </li>
-        <li>
-            <div>
-                <p style="color:#FFF">20:55 欧奈酱：</p>
-                <p>我要躺了</p>
-            </div>
-        </li>
-    </ul>
-    <div style="display: flex">
-    <form action="">
-        <select name="cars" id="sender">
-            <option value="onj">欧奈酱</option>
-            <option value="odd">欧豆豆</option>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MoonTalk</title>
+    <style>  
+      body {
+        margin: 10px;
+      }
+    </style>
+  </head>
+  <body>
+
+    <script src="index.js"></script>
+
+    <div>
+      <p style="
+        background-color:#43A3CC;
+        height:36px;
+        ">
+          <font size="5"><i><B>&nbsp&nbspMoonTalk 轻松访问</B></i></font>
+      </p>
+      
+      </div style="
+        background-color:#;
+        ">
+        <ul style="
+        background-color:#b1E3FF;
+        ">
+          <li style="
+        background-color:#91E3B0;
+        ">
+            <p>欧豆豆 11:34</p>
+            <p>吃饭了吗</p>
+          </li>
+          <li>
+            <p>欧奈酱 11:50</p>
+            <p>午饭倒计时，冲刺准备！</p>
+          </li>
+          <li style="
+        background-color:#91E3B0;
+        ">
+            <p>欧豆豆 11:59</p>
+            <p>冲！！</p>
+          </li>
+        </ul>
+
+      <div>
+      </div>
+
+      <div style="display:flex;
+      background-color: #2A6680">
+        <select style="
+        height:24px;
+        width: 66px;"
+          id="sender">
+          <option value="onj">欧奈酱</option>
+          <option value="odd">>欧豆豆</option>
         </select>
-    </form>
-    <input id="msg"/>
-    <button onclick="send()">
-        发送
-    </button>
-    </div>
-</div>
-</body>
+&nbsp&nbsp&nbsp&nbsp
+        <input style="
+        height:100px;
+        width: 340px;
+          id="msg"
+        >
+        </input>
+&nbsp&nbsp
+
+        <input style="
+        height:25px;
+        width: 66px;
+        "
+          id="sendbutton" type="button" value="发送"
+          >
+          <script>
+            document.getElementById("sendbutton").align="bottom";
+          </script>
+
+      </div>
+      
+      <script src="../js/jquery.min.js"></script>
+      <script src="../js/index.js"></script>
+    
+  </body>
 </html>
