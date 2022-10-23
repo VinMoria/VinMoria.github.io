@@ -9,18 +9,44 @@
         margin: 0;
       }
 
+      div.title {
+        line-height:40px;
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        background-color: #65B7EB;
+        height: 40px;
+        border: 50px; <!--没用？-->
+        border-color: #000000; <!--同上-->
+      }
+
       p.name {
         font-size:15px;
+        line-height:120%
       }
 
       p.msg {
         font-size:15px;
         text-indent:25px;
+        line-height:80%;
       }
 
       ul{
-        padding-inline-start: 20px;
+        background-color:#b1E3FF;
+        list-style:none;
+        padding:5px;
+        padding-inline-start: 25px;
       }
+
+      div.interface{
+      	position: -webkit-sticky;
+        position: sticky;
+	      bottom:0;
+	      right:50px;
+        display: flex;
+      background-color: #2678AB;
+      padding:8px;
+        }
 
       input{
         margin:8px;
@@ -41,22 +67,21 @@
     border:1px solid #2E546B;
     ">
 
-    <div>
-      <p style="
-        background-color:#65B7EB;
-        height:36px;
-        ">
+    <div class=title>
+      <div>
+        <p>
           <font size="5"><i><B>&nbsp&nbspMoonTalk 轻松访问</B></i></font>
-      </p>
+        </p>
+      </div><!--头-->
+
+      
       
       </div style="
         background-color:#;
 
         ">
         <ul style="
-        background-color:#b1E3FF;
-        list-style:none;
-        padding:15px;
+        
         ">
           <li style="
         background-color:;
@@ -74,7 +99,25 @@
             <p class=name>欧豆豆 11:59</p>
             <p class=msg>冲！！</p>
           </li>
-        </ul>
+          <li>
+            <p class=name>欧豆豆 12:06</p>
+            <p class=msg>吃饭了吗</p>
+          </li>
+          <li>
+            <p class=name>欧奈酱 12:30</p>
+            <p class=msg>没吃呢还……QAQ</p>
+          </li>
+          <li style="
+        background-color:;
+        ">
+            <p class=name>欧豆豆 12:36</p>
+            <p class=msg>快吃！！</p>
+          </li>
+          <li>
+            <p class=name>欧奈酱 12:44</p>
+            <p class=msg>我要写代码(ง •̀_•́)ง</p>
+          </li>
+        </ul><!--聊天文本-->
 
       <div>
         <!--
@@ -83,10 +126,8 @@
       </div>
       </div>
 
-      <div style="display: flex;
-      background-color: #2678AB;
-      padding:8px
-      ">
+      <div class=interface
+      >
 &nbsp&nbsp&nbsp
 
         <div>
@@ -96,7 +137,7 @@
             id="msg"
           >
           </input>
-        </div>
+        </div><!--输入框-->
 &nbsp&nbsp
 
         <div style="
@@ -110,7 +151,7 @@
             id="sender">
             <option value="onj">欧奈酱</option>
             <option value="odd">>欧豆豆</option>
-          </select>
+          </select><!--选择发言人-->
           
           <input style="
           height:25px;
@@ -118,7 +159,7 @@
           "
             id="sendbutton" type="button" value="发送"
             onclick="send()"
-            >
+            ><!--发送按钮-->
             <!--
               <script>
               document.getElementById("sendbutton").align="bottom";
