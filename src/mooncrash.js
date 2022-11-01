@@ -5,7 +5,7 @@ var mysql  = require('mysql');
 const querystring = require('querystring')
 
 var connection = mysql.createConnection({
-   host     : 'localhost',
+   host     : '127.0.0.1',
    user     : 'root',
    password : 'aVhzrzv0A<ht',
    port: '3306',
