@@ -6,7 +6,7 @@ const querystring = require('querystring')
 
 var connection = mysql.createConnection({
    host     : '127.0.0.1',
-   user     : 'mysql',
+   user     : 'root',
    password : 'aVhzrzv0A<ht',
    port: '3306',
    database: 'moontalk'
