@@ -1,215 +1,73 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>MoonTalk</title>
-    <style>  
-      body {
-        margin: 0;
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MoonTune</title>
+  <style>
+
+
+  </style>
+</head>
+
+<body>
+  <script>
+    //调号的升降
+    var option1 = ["no", "up", "down"]
+    //调号
+    var option2 = "GDAEBFCFBEADGCebfcgdadcfbea"
+    //升降记号数量
+    var option3 = []
+    //记号的升降
+    var option4 = []
+
+    function getAnswers() {
+      var answer1
+      var answer2
+      let form_answer1 = document.getElementsByName("answer1")
+      for (var i = 0, length = form_answer1.length; i < length; i++) {
+        if (form_answer1[i].checked) {
+          // 弹出选中值
+          answer1 = form_answer1[i].value
+          // 选中后退出循环
+          break;
+        }
+
+        let form_answer2 = document.getElementsByName("answer2")
+        for (var i = 0, length = form_answer2.length; i < length; i++) {
+          if (form_answer2[i].checked) {
+            answer2 = form_answer2[i].value
+            break;
+          }
+        }
+        console.log(answer1, answer2)
       }
 
-      div.title {
-        line-height:42px;
-        position: -webkit-sticky;
-        position: sticky;
-        top: 0;
-        background: linear-gradient(to top,#9fc9e3,#bbdff8);
-        height: 47px;
-        border: 50px; <!--没用？-->
-        border-color: #000000; <!--同上-->
+      function gen_option(type, number){
+        
       }
+  </script>
+  <div>
+    <img id="question-img" src="./tuneImg/Snipaste_2024-03-27_16-12-51.png">
+  </div>
+  <div>
+    <form id="form1">
+      <label><input type="radio" name="answer1" value=0>-</label>
+      <label><input type="radio" name="answer1" value=1>升</label>
+      <label><input type="radio" name="answer1" value=2>降</label>
+    </form>
 
-      p.name {
-        font-size:15px;
-        line-height:120%
-      }
+    <form>
+      <label><input type="radio" name="answer2" value=0>-</label>
+      <label><input type="radio" name="answer2" value=1>升</label>
+      <label><input type="radio" name="answer2" value=2>降</label>
+    </form>
 
-      p.msg {
-        font-size:15px;
-        text-indent:25px;
-        line-height:80%;
-      }
+  </div>
+  <div>
+    <button onclick="getAnswers()">Check</button>
+  </div>
+</body>
 
-      ul{
-        background-color:#deeefb;
-        list-style:none;
-        padding:5px;
-        padding-inline-start: 25px;
-      }
-
-      div.interface{
-      	position: -webkit-sticky;
-        position: sticky;
-	      bottom:0;
-	      right:50px;
-        display: flex;
-      background-color: #77B6E6;
-      padding:8px;
-      }
-
-      input{
-        margin:8px;
-      }
-
-      select{
-        margin:8px;
-      }
-
-    </style>
-  </head>
-  <body style="
-    padding:40px;
-    ">
-
-    <script src="index.js"></script>
-    <div style="
-    border:1px solid #2E546B;
-    ">
-
-      <div class=title>
-        <div>
-          <p style="
-            border:1px solid #FFFFFF;
-          ">
-            <font size="5"><i><B>&nbsp&nbspMoonTalk 轻松访问</B></i></font>
-          </p>
-        </div><!--头-->
-      </div>
-
-        <ul>
-          <li style="
-            background-color:;
-          ">
-            <p class=name>欧豆豆 11:34</p>
-            <p class=msg>吃饭了吗</p>
-            <img src="./src/img/send_icon.png">
-          </li>
-          <li>
-            <p class=name>欧奈酱 11:50</p>
-            <p class=msg>午饭倒计时，冲刺准备！</p>
-          </li>
-          <li style="
-            background-color:;
-          ">
-            <p class=name>欧豆豆 11:59</p>
-            <p class=msg>冲！！</p>
-          </li>
-          <li>
-            <p class=name>欧豆豆 12:06</p>
-            <p class=msg>吃饭了吗</p>
-          </li>
-          <li>
-            <p class=name>欧奈酱 12:30</p>
-            <p class=msg>没吃呢还……QAQ</p>
-          </li>
-          <li style="
-            background-color:;
-          ">
-            <p class=name>欧豆豆 12:36</p>
-            <p class=msg>快吃！！</p>
-          </li>
-          <li>
-            <p class=name>欧奈酱 12:44</p>
-            <p class=msg>我要写代码(ง •̀_•́)ง</p>
-          </li>
-          <li>
-            <p class=name>欧豆豆 12:45</p>
-            <p class=msg>憋写了，快去吃！</p>
-          </li>
-          <li>
-            <p class=name>欧奈酱 12:45</p>
-            <p class=msg>啊啊啊我要写啊</p>
-          </li>
-          <li>
-            <p class=name>欧豆豆 12:45</p>
-            <p class=msg>不许碰鼠标键盘了！快去点外卖！！</p>
-          </li>
-          <li>
-            <p class=name>欧奈酱 12:46</p>
-            <p class=msg>.._:(´_`」 ∠):_ …</p>
-          </li>
-          <li>
-            <p class=name>欧豆豆 12:46</p>
-            <p class=msg>快点外卖！！</p>
-          </li>
-          <li>
-            <p class=name>欧豆豆 12:46</p>
-            <p class=msg>快点外卖！！</p>
-          </li>
-          <li>
-            <p class=name>欧豆豆 12:46</p>
-            <p class=msg>快点外卖！！</p>
-          </li>
-          <li>
-            <p class=name>欧豆豆 12:47</p>
-            <p class=msg>快点外卖！！</p>
-          </li>
-          <li>
-            <p class=name>欧豆豆 12:47</p>
-            <p class=msg>快点外卖！！</p>
-          </li>
-          <li>
-            <p class=name>欧豆豆 12:47</p>
-            <p class=msg>快点外卖！！</p>
-          </li>
-        </ul><!--聊天文本-->
-
-      <div>
-        <!--
-            待开发功能~
-          -->
-      </div>
-    </div>
-
-    <div class=interface>
-&nbsp&nbsp&nbsp
-
-      <div>
-        <input style="
-          height:100px;
-          width: 320px;
-            id="msg"
-        >
-        </input>
-      </div><!--输入框-->
-&nbsp&nbsp
-
-      <div style="
-        display: flex;
-        flex-direction: column;
-        margin:8px;
-      ">
-        <select style="
-          height:24px;
-          width: 65px;"
-            id="sender">
-          <option value="onj">欧奈酱</option>
-          <option value="odd">>欧豆豆</option>
-        </select><!--选择发言人-->
-          
-        <input style="
-          height:25px;
-          width: 65px;
-        "
-          id="sendbutton" type="button" value="发送"
-          onclick="send()"
-        ><!--发送按钮-->
-          <!--
-            <script>
-            document.getElementById("sendbutton").align="bottom";
-            </script>
-          -->
-      </div>
-    </div>
-
-    <script>
-      function send(){
-        alert("发送失败啦~暂无此功能，请耐心等待开发人员更新(。・＿・。)ﾉ")
-      }
-    </script>
-    <script src="../js/jquery.min.js"></script>
-    <script src="../js/index.js"></script>
-    
-  </body>
 </html>

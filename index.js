@@ -1,9 +1,5 @@
-function sendToServer(a, b){
-        alert(a+": "+b)
-    }
-
-    function send(){
-        sendToServer(document.getElementById("sender").value,
-                        document.getElementById("msg").value)
-        sendToServer("hhh", "ooo")
-    }
+function getAnswers(){
+    let answer1 = document.getElementsByName("answer1")
+    let answer2 = document.getElementsByName("answer2")
+    print(answer1, answer2)
+}
