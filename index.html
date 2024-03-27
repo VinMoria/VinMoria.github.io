@@ -6,40 +6,104 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>MoonTune</title>
   <style>
+    .option-button {
+      border-radius: 5px;
+      background-color: white;
+      border: solid 2px #5e7987;
+      font-size: 20px;
+      color: #5e7987;
+      margin: 2px;
+      height: 60px;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
 
+    .option-button-focus {
+      border-radius: 5px;
+      background-color: #2f90b9;
+      border: solid 3px #2f90b9;
+      font-size: 25px;
+      color: white;
+      margin: 5px;
+      height: 70px;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
 
+    .check-button{
+      border-radius: 60px;
+      background-color: #ffc209;
+      border: 0px;
+      font-size: 25px;
+      color: white;
+      margin: 5px;
+      height: 70px;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+
+    .next-button{
+      border-radius: 60px;
+      background-color: #f44235;
+      border: 0px;
+      font-size: 25px;
+      color: white;
+      margin: 5px;
+      height: 70px;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+
+    .right-text{
+      border-radius: 5px;
+      background-color: #9dce61;
+      font-size: 20px;
+      color: white;
+      margin: 10px;
+      padding: 5px;
+    }
+
+    .wrong-text{
+      border-radius: 5px;
+      background-color: #c15a5a;
+      font-size: 20px;
+      color: white;
+      margin: 10px;
+      padding: 5px;
+    }
   </style>
 </head>
 
 <body>
   <script>
     //调号的升降
-    var option1 = ["-", "升", "降"]
+    var option1_text = ["♮", "♯", "♭"]
     //调号
-    var option2 = "ABCDEFG"
+    var option2_text = "ABCDEFG"
     //记号的升降
-    var option3 = ["升", "降"]
+    var option3_text = ["♯", "♭"]
     //升降记号数量
-    var option4 = "1234567"
+    var option4_text = "1234567"
 
     var answer_array_type1 = [[0, 6], [0, 3], [0, 0], [0, 4], [0, 1], [1, 5], [1, 2], [0, 5], [2, 1], [2, 4], [2, 0], [2, 3], [2, 6], [2, 2]]
 
     var right_answer1
     var right_answer2
 
-    window.onload = function () {
-      gen_question()
-    };
+    var answer1
+    var answer2
 
     function gen_question() {
+      document.getElementById("res_text").innerText = ""
+      document.getElementById("res_text").className = ""
       var type = Math.floor(Math.random() * 2)
       var tune_no = Math.floor(Math.random() * 14)
       if (type == 0) {
         right_answer1 = answer_array_type1[tune_no][0]
         right_answer2 = answer_array_type1[tune_no][1]
       } else {
-        right_answer1 = Math.floor(tune_no / 7)
-        right_answer2 = tune_no % 7
+        right_answer1 = (Math.floor(tune_no / 7)).toString()
+        right_answer2 = (tune_no % 7).toString()
       }
       console.log("right-answer:")
       console.log(right_answer1, right_answer2)
@@ -50,29 +114,14 @@
     }
 
     function check_answer() {
-      var answer1
-      var answer2
-      let form_answer1 = document.getElementsByName("answer1")
-      for (var i = 0, length = form_answer1.length; i < length; i++) {
-        if (form_answer1[i].checked) {
-          // 弹出选中值
-          answer1 = form_answer1[i].value
-          // 选中后退出循环
-          break;
-        }
-      }
-      let form_answer2 = document.getElementsByName("answer2")
-      for (var i = 0, length = form_answer2.length; i < length; i++) {
-        if (form_answer2[i].checked) {
-          answer2 = form_answer2[i].value
-          break;
-        }
-      }
+
       console.log(answer1, answer2)
       if (answer1 == right_answer1 & answer2 == right_answer2) {
-        alert("right")
+        document.getElementById("res_text").innerText = "答对了 (ง •̀_•́)ง‼"
+        document.getElementById("res_text").className = "right-text"
       } else {
-        alert("wrong")
+        document.getElementById("res_text").innerText = "不太对捏( ó × ò)"
+        document.getElementById("res_text").className = "wrong-text"
       }
     }
 
@@ -83,69 +132,99 @@
       option_form_1.innerHTML = null
       option_form_2.innerHTML = null
 
+      answer1 = null
+      answer2 = null
+
       if (type == 0) { //根据图像选调号
-        for (var i = 0; i < 3; i++) {
-          var new_label = document.createElement("label")
-          var new_input = document.createElement("input")
-          new_input.type = "radio"
-          new_input.name = "answer1"
-          new_input.value = i
-          new_label.innerText = option1[i]
-          option_form_1.appendChild(new_input)
-          option_form_1.appendChild(new_label)
+        answer1 = "0"
+        // 还原，升，降
+        var new_button = document.createElement("button")
+        new_button.className = "option-button-focus"
+        new_button.name = "answer1"
+        new_button.value = 0
+        new_button.innerText = option1_text[0]
+        new_button.setAttribute("onclick", "hit_button()")
+        option_form_1.appendChild(new_button)
+
+        for (var i = 1; i < 3; i++) {
+          var new_button = document.createElement("button")
+          new_button.className = "option-button"
+          new_button.name = "answer1"
+          new_button.value = i
+          new_button.innerText = option1_text[i]
+          new_button.setAttribute("onclick", "hit_button()")
+          option_form_1.appendChild(new_button)
         }
 
+        // X大调
         for (var i = 0; i < 7; i++) {
-          var new_label = document.createElement("label")
-          var new_input = document.createElement("input")
-          new_input.type = "radio"
-          new_input.name = "answer2"
-          new_input.value = i
-          new_label.innerText = option2.charAt(i) + "大调"
-          option_form_2.appendChild(new_input)
-          option_form_2.appendChild(new_label)
+          var new_button = document.createElement("button")
+          new_button.className = "option-button"
+          new_button.name = "answer2"
+          new_button.value = i
+          new_button.innerText = option2_text.charAt(i)
+          new_button.setAttribute("onclick", "hit_button()")
+          option_form_2.appendChild(new_button)
         }
       } else { //根据调号选图像
+        // 升，降
         for (var i = 0; i < 2; i++) {
-          var new_label = document.createElement("label")
-          var new_input = document.createElement("input")
-          new_input.type = "radio"
-          new_input.name = "answer1"
-          new_input.value = i
-          new_label.innerText = option3[i]
-          option_form_1.appendChild(new_input)
-          option_form_1.appendChild(new_label)
+          var new_button = document.createElement("button")
+          new_button.className = "option-button"
+          new_button.name = "answer1"
+          new_button.value = i
+          new_button.innerText = option3_text[i]
+          new_button.setAttribute("onclick", "hit_button()")
+          option_form_1.appendChild(new_button)
         }
 
+        // 几个
         for (var i = 0; i < 7; i++) {
-          var new_label = document.createElement("label")
-          var new_input = document.createElement("input")
-          new_input.type = "radio"
-          new_input.name = "answer2"
-          new_input.value = i
-          new_label.innerText = (i + 1).toString()
-          option_form_2.appendChild(new_input)
-          option_form_2.appendChild(new_label)
+          var new_button = document.createElement("button")
+          new_button.className = "option-button"
+          new_button.name = "answer2"
+          new_button.value = i
+          new_button.innerText = (i + 1).toString()
+          new_button.setAttribute("onclick", "hit_button()")
+          option_form_2.appendChild(new_button)
         }
       }
     }
+
+    function hit_button() {
+      let me = event.target
+      // 设置选中样式
+      let name_group = document.getElementsByName(me.name)
+      for (var i = 0, length = name_group.length; i < length; i++) {
+        name_group[i].className = "option-button"
+      }
+      me.className = "option-button-focus"
+
+      // 设置answer
+      if (me.name == "answer1") {
+        answer1 = me.value
+      } else if (me.name == "answer2") {
+        answer2 = me.value
+      }
+    }
+
   </script>
-  <div>
-    <img id="question-img" src="./tuneImg/default.png">
+  <div style="height: 40vh;width: 100%;text-align: center;padding: auto;">
+    <img id="question-img" style="margin: auto;" src="./tuneImg/default.png">
+    <p id="res_text"></p>
   </div>
-  <div>
-    <form id="option_form_1">
-    </form>
+  <div style="height: 40vh;width: 100%;text-align: center;">
+    <div id="option_form_1">
+    </div>
 
-    <hr/>
+    <hr />
 
-    <form id="option_form_2">
-    </form>
-
+    <div id="option_form_2">
+    </div>
   </div>
-  <div>
-    <button onclick="check_answer()">检查</button>
-    <button onclick="gen_question()">继续</button>
+  <div style="height: 20vh;width: 100%;text-align: center;">
+    <button onclick="check_answer()" class="check-button">CHECK</button>
+    <button onclick="gen_question()" class="next-button">NEXT</button>
   </div>
 </body>
 
