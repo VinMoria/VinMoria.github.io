@@ -14,15 +14,44 @@
 <body>
   <script>
     //调号的升降
-    var option1 = ["no", "up", "down"]
+    var option1 = ["-", "升", "降"]
     //调号
-    var option2 = "GDAEBFCFBEADGCebfcgdadcfbea"
-    //升降记号数量
-    var option3 = []
+    var option2 = "ABCDEFG"
     //记号的升降
-    var option4 = []
+    var option3 = ["升", "降"]
+    //升降记号数量
+    var option4 = "1234567"
 
-    function getAnswers() {
+    var answer_array_type1 = [[0, 6], [0, 3], [0, 0], [0, 4], [0, 1], [1, 5], [1, 2], [0, 5], [2, 1], [2, 4], [2, 0], [2, 3], [2, 6], [2, 2]]
+    var answer_array_type2 = [[], [], [], []]
+
+    var right_answer1
+    var right_answer2
+
+    window.onload = function () {
+      gen_option(0)
+      console.log("init")
+    };
+
+    function gen_question() {
+      var type = Math.floor(Math.random() * 2)
+      var tune_no = Math.floor(Math.random() * 14)
+      if (type == 0) {
+        right_answer1 = answer_array_type1[tune_no][0]
+        right_answer2 = answer_array_type1[tune_no][1]
+      } else {
+        right_answer1 = Math.floor(tune_no / 7)
+        right_answer2 = tune_no % 7
+      }
+      console.log("right-answer:")
+      console.log(right_answer1, right_answer2)
+
+      gen_option(type)
+      let question_img = document.getElementById("question-img")
+      question_img.src = "./tuneImg/" + tune_no.toString() + "-" + type.toString() + ".png"
+    }
+
+    function check_answer() {
       var answer1
       var answer2
       let form_answer1 = document.getElementsByName("answer1")
@@ -33,40 +62,90 @@
           // 选中后退出循环
           break;
         }
-
-        let form_answer2 = document.getElementsByName("answer2")
-        for (var i = 0, length = form_answer2.length; i < length; i++) {
-          if (form_answer2[i].checked) {
-            answer2 = form_answer2[i].value
-            break;
-          }
+      }
+      let form_answer2 = document.getElementsByName("answer2")
+      for (var i = 0, length = form_answer2.length; i < length; i++) {
+        if (form_answer2[i].checked) {
+          answer2 = form_answer2[i].value
+          break;
         }
-        console.log(answer1, answer2)
       }
+      console.log(answer1, answer2)
+      if (answer1 == right_answer1 & answer2 == right_answer2) {
+        alert("right")
+      } else {
+        alert("wrong")
+      }
+    }
 
-      function gen_option(type, number){
-        
+    function gen_option(type) {
+      let option_form_1 = document.getElementById("option_form_1")
+      let option_form_2 = document.getElementById("option_form_2")
+
+      option_form_1.innerHTML = null
+      option_form_2.innerHTML = null
+
+      if (type == 0) { //根据图像选调号
+        for (var i = 0; i < 3; i++) {
+          var new_label = document.createElement("label")
+          var new_input = document.createElement("input")
+          new_input.type = "radio"
+          new_input.name = "answer1"
+          new_input.value = i
+          new_label.innerText = option1[i]
+          option_form_1.appendChild(new_input)
+          option_form_1.appendChild(new_label)
+        }
+
+        for (var i = 0; i < 7; i++) {
+          var new_label = document.createElement("label")
+          var new_input = document.createElement("input")
+          new_input.type = "radio"
+          new_input.name = "answer2"
+          new_input.value = i
+          new_label.innerText = option2.charAt(i) + "大调"
+          option_form_2.appendChild(new_input)
+          option_form_2.appendChild(new_label)
+        }
+      } else { //根据调号选图像
+        for (var i = 0; i < 2; i++) {
+          var new_label = document.createElement("label")
+          var new_input = document.createElement("input")
+          new_input.type = "radio"
+          new_input.name = "answer1"
+          new_input.value = i
+          new_label.innerText = option3[i]
+          option_form_1.appendChild(new_input)
+          option_form_1.appendChild(new_label)
+        }
+
+        for (var i = 0; i < 7; i++) {
+          var new_label = document.createElement("label")
+          var new_input = document.createElement("input")
+          new_input.type = "radio"
+          new_input.name = "answer2"
+          new_input.value = i
+          new_label.innerText = (i + 1).toString()
+          option_form_2.appendChild(new_input)
+          option_form_2.appendChild(new_label)
+        }
       }
+    }
   </script>
   <div>
     <img id="question-img" src="./tuneImg/Snipaste_2024-03-27_16-12-51.png">
   </div>
   <div>
-    <form id="form1">
-      <label><input type="radio" name="answer1" value=0>-</label>
-      <label><input type="radio" name="answer1" value=1>升</label>
-      <label><input type="radio" name="answer1" value=2>降</label>
+    <form id="option_form_1">
     </form>
 
-    <form>
-      <label><input type="radio" name="answer2" value=0>-</label>
-      <label><input type="radio" name="answer2" value=1>升</label>
-      <label><input type="radio" name="answer2" value=2>降</label>
+    <form id="option_form_2">
     </form>
 
   </div>
   <div>
-    <button onclick="getAnswers()">Check</button>
+    <button onclick="check_answer()">检查</button>
+    <button onclick="gen_question()">继续</button>
   </div>
 </body>
 
