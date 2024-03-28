@@ -94,6 +94,12 @@
       outline: none;
       margin: 10px;
     }
+
+    #question-text{
+      font-size: 40px;
+      color: #5e7987;
+    }
+
   </style>
 </head>
 
@@ -107,6 +113,8 @@
     var option3_text = ["♯", "♭"]
     //升降记号数量
     var option4_text = "1234567"
+
+    var question_texts = ["G大调", "D大调", "A大调", "E大调", "B大调", "♯F大调", "♯C大调", "F大调", "♭B大调", "♭E大调", "♭A大调", "♭D大调", "♭G大调", "♭C大调", "e小调", "b小调", "♯f小调", "♯c小调", "♯g小调", "♯d小调", "♯a小调", "d小调", "g小调", "c小调", "f小调", "♭b小调", "♭e小调", "♭a小调"]
 
     var answer_array_type1 = [[0, 6], [0, 3], [0, 0], [0, 4], [0, 1], [1, 5], [1, 2], [0, 5], [2, 1], [2, 4], [2, 0], [2, 3], [2, 6], [2, 2]]
 
@@ -145,17 +153,18 @@
       if (type == 0) {
         right_answer1 = answer_array_type1[tune_no][0]
         right_answer2 = answer_array_type1[tune_no][1]
-      } else {
+        document.getElementById("question-img").src = "./tuneImg/" + tune_no.toString() + "-" + type.toString() + ".png"
+        document.getElementById("question-text").innerText = ""
+      } else if (type == 1) {
         right_answer1 = (Math.floor(tune_no / 7)).toString()
         right_answer2 = (tune_no % 7).toString()
+        document.getElementById("question-img").src = ""
+        document.getElementById("question-text").innerText = question_texts[tune_no]
       }
-      console.log("right-answer:")
-      console.log(right_answer1, right_answer2)
       // 生成选项
       gen_option(type)
       // 显示题目图片
-      let question_img = document.getElementById("question-img")
-      question_img.src = "./tuneImg/" + tune_no.toString() + "-" + type.toString() + ".png"
+
     }
 
     // 检查答案是否正确
@@ -195,8 +204,6 @@
           break
         }
       }
-
-
     }
 
     // 生成选项
@@ -281,9 +288,10 @@
     }
 
   </script>
-  <div style="height: 40vh;width: 100%;text-align: center;padding: auto;">
+  <div style="height: 35vh;width: 100%;text-align: center;padding: auto;">
     <p style="color:rgb(190, 190, 190);">MoonTune Ver 2.4</p>
     <img id="question-img" style="margin: auto;max-width: 170px;" src="./tuneImg/default.png">
+    <p id="question-text"></p>
     <p id="res_text"></p>
   </div>
   <div style="height: 35vh;width: 100%;text-align: center;">
