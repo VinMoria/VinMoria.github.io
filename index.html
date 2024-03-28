@@ -32,26 +32,13 @@
 
     .check-button {
       border-radius: 60px;
-      background-color: #ffc209;
+      background-color: #f7936c;
       border: 0px;
       font-size: 25px;
       color: white;
       margin: 5px;
       height: 70px;
-      padding-left: 10px;
-      padding-right: 10px;
-    }
-
-    .next-button {
-      border-radius: 60px;
-      background-color: #f44235;
-      border: 0px;
-      font-size: 25px;
-      color: white;
-      margin: 5px;
-      height: 70px;
-      padding-left: 10px;
-      padding-right: 10px;
+      width: 80%;
     }
 
     .right-text {
@@ -94,6 +81,8 @@
     var answer2
 
     var img_array = new Array()
+
+    var control_button_status = 0
     
     window.onload = function () {
       // 图片预加载
@@ -233,8 +222,22 @@
       }
     }
 
+    function control_button_hit(){
+      let me = event.target
+      if(control_button_status == 0){
+        gen_question()
+        me.innerText = "CHECK"
+        control_button_status = 1
+      }else if(control_button_status == 1){
+        check_answer()
+        me.innerText = "NEXT"
+        control_button_status = 0
+      }
+    }
+
   </script>
   <div style="height: 40vh;width: 100%;text-align: center;padding: auto;">
+    <p style="color:rgb(190, 190, 190);" >Ver 2.3</p>
     <img id="question-img" style="margin: auto;" src="./tuneImg/default.png">
     <p id="res_text"></p>
   </div>
@@ -248,8 +251,7 @@
     </div>
   </div>
   <div style="height: 15vh;width: 100%;text-align: center;">
-    <button onclick="check_answer()" class="check-button">CHECK</button>
-    <button onclick="gen_question()" class="next-button">NEXT</button>
+    <button onclick="control_button_hit()" class="check-button">Let's GO ~</button>
   </div>
 </body>
 
