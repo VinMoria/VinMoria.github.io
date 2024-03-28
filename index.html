@@ -93,11 +93,29 @@
     var answer1
     var answer2
 
+    var img_array = new Array()
+    
+    window.onload = function () {
+      // 图片预加载
+      for(var i =0;i<14;i++){
+        for (var j = 0;j<2;j++){
+          var new_img = new Image()
+          new_img.src = "./tuneImg/"+i.toString()+"-"+j.toString() +".png"
+          img_array.push(new_img)
+          //console.log(new_img.src)
+        }
+      }
+    };
+
+    // 生成新的一题
     function gen_question() {
+      //将正确错误信息提示清除
       document.getElementById("res_text").innerText = ""
       document.getElementById("res_text").className = ""
+      //随机数
       var type = Math.floor(Math.random() * 2)
       var tune_no = Math.floor(Math.random() * 14)
+      //生成正确答案
       if (type == 0) {
         right_answer1 = answer_array_type1[tune_no][0]
         right_answer2 = answer_array_type1[tune_no][1]
@@ -107,12 +125,14 @@
       }
       console.log("right-answer:")
       console.log(right_answer1, right_answer2)
-
+      // 生成选项
       gen_option(type)
+      // 显示题目图片
       let question_img = document.getElementById("question-img")
       question_img.src = "./tuneImg/" + tune_no.toString() + "-" + type.toString() + ".png"
     }
 
+    // 检查答案是否正确
     function check_answer() {
 
       console.log(answer1, answer2)
@@ -124,20 +144,24 @@
         document.getElementById("res_text").className = "wrong-text"
       }
     }
-
+    
+    // 生成选项
     function gen_option(type) {
+      // 获取form
       let option_form_1 = document.getElementById("option_form_1")
       let option_form_2 = document.getElementById("option_form_2")
-
+      // 清空form
       option_form_1.innerHTML = null
       option_form_2.innerHTML = null
-
+      // 选择的答案置空
       answer1 = null
       answer2 = null
 
       if (type == 0) { //根据图像选调号
-        answer1 = "0"
         // 还原，升，降
+
+        // 默认选还原
+        answer1 = "0"
         var new_button = document.createElement("button")
         new_button.className = "option-button-focus"
         new_button.name = "answer1"
@@ -156,7 +180,7 @@
           option_form_1.appendChild(new_button)
         }
 
-        // X大调
+        // 哪个大调
         for (var i = 0; i < 7; i++) {
           var new_button = document.createElement("button")
           new_button.className = "option-button"
@@ -178,7 +202,7 @@
           option_form_1.appendChild(new_button)
         }
 
-        // 几个
+        // 几个升降标记
         for (var i = 0; i < 7; i++) {
           var new_button = document.createElement("button")
           new_button.className = "option-button"
@@ -191,9 +215,10 @@
       }
     }
 
+    // 选项按钮被点击时
     function hit_button() {
       let me = event.target
-      // 设置选中样式
+      // 设置选中样式，重置其他选项的样式
       let name_group = document.getElementsByName(me.name)
       for (var i = 0, length = name_group.length; i < length; i++) {
         name_group[i].className = "option-button"
