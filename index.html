@@ -31,6 +31,30 @@
       padding-right: 10px;
     }
 
+    .wrong-option {
+      border-radius: 5px;
+      background-color: #c15a5a;
+      border: solid 3px #c15a5a;
+      font-size: 25px;
+      color: white;
+      margin: 5px;
+      height: 70px;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+
+    .right-option {
+      border-radius: 5px;
+      background-color: #9dce61;
+      border: solid 3px #9dce61;
+      font-size: 25px;
+      color: white;
+      margin: 5px;
+      height: 70px;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+
     .check-button {
       border-radius: 60px;
       background-color: #f7936c;
@@ -59,6 +83,17 @@
       margin: 10px;
       padding: 5px;
     }
+
+    #question-set-select {
+      border: #93b5cf 1px solid;
+      color: #93b5cf;
+      border-radius: 10px;
+      font-size: 20px;
+      padding: 10px;
+      max-width: 400px;
+      outline: none;
+      margin: 10px;
+    }
   </style>
 </head>
 
@@ -84,13 +119,13 @@
     var img_array = new Array()
 
     var control_button_status = 0
-    
+
     window.onload = function () {
       // 图片预加载
-      for(var i =0;i<14;i++){
-        for (var j = 0;j<2;j++){
+      for (var i = 0; i < 14; i++) {
+        for (var j = 0; j < 2; j++) {
           var new_img = new Image()
-          new_img.src = "./tuneImg/"+i.toString()+"-"+j.toString() +".png"
+          new_img.src = "./tuneImg/" + i.toString() + "-" + j.toString() + ".png"
           img_array.push(new_img)
           //console.log(new_img.src)
         }
@@ -100,6 +135,7 @@
     // 生成新的一题
     function gen_question() {
       //将正确错误信息提示清除
+      //console.log(document.getElementById("question-set-select").value)
       document.getElementById("res_text").innerText = ""
       document.getElementById("res_text").className = ""
       //随机数
@@ -124,17 +160,45 @@
 
     // 检查答案是否正确
     function check_answer() {
-
+      let option_form_1 = document.getElementsByName("answer1")
+      let option_form_2 = document.getElementsByName("answer2")
       console.log(answer1, answer2)
       if (answer1 == right_answer1 & answer2 == right_answer2) {
         document.getElementById("res_text").innerText = "答对了 (ง •̀_•́)ง‼"
         document.getElementById("res_text").className = "right-text"
-      } else {
+      }
+      else {
         document.getElementById("res_text").innerText = "不太对捏( ó × ò)"
         document.getElementById("res_text").className = "wrong-text"
+        for (var i = 0; i < option_form_1.length; i++) {
+          if (option_form_1[i].value == answer1) {
+            option_form_1[i].className = "wrong-option"
+            break
+          }
+        }
+        for (var i = 0; i < option_form_2.length; i++) {
+          if (option_form_2[i].value == answer2) {
+            option_form_2[i].className = "wrong-option"
+            break
+          }
+        }
       }
+      for (var i = 0; i < option_form_1.length; i++) {
+        if (option_form_1[i].value == right_answer1) {
+          option_form_1[i].className = "right-option"
+          break
+        }
+      }
+      for (var i = 0; i < option_form_2.length; i++) {
+        if (option_form_2[i].value == right_answer2) {
+          option_form_2[i].className = "right-option"
+          break
+        }
+      }
+
+
     }
-    
+
     // 生成选项
     function gen_option(type) {
       // 获取form
@@ -149,60 +213,40 @@
 
       if (type == 0) { //根据图像选调号
         // 还原，升，降
-
         // 默认选还原
         answer1 = "0"
-        var new_button = document.createElement("button")
-        new_button.className = "option-button-focus"
-        new_button.name = "answer1"
-        new_button.value = 0
-        new_button.innerText = option1_text[0]
-        new_button.setAttribute("onclick", "hit_button()")
-        option_form_1.appendChild(new_button)
-
+        gen_option_button("answer1", option_form_1, 0, option1_text[0]).className = "option-button-focus"
         for (var i = 1; i < 3; i++) {
-          var new_button = document.createElement("button")
-          new_button.className = "option-button"
-          new_button.name = "answer1"
-          new_button.value = i
-          new_button.innerText = option1_text[i]
-          new_button.setAttribute("onclick", "hit_button()")
-          option_form_1.appendChild(new_button)
+          gen_option_button("answer1", option_form_1, i, option1_text[i])
         }
-
         // 哪个大调
         for (var i = 0; i < 7; i++) {
-          var new_button = document.createElement("button")
-          new_button.className = "option-button"
-          new_button.name = "answer2"
-          new_button.value = i
-          new_button.innerText = option2_text.charAt(i)
-          new_button.setAttribute("onclick", "hit_button()")
-          option_form_2.appendChild(new_button)
-        }
-      } else { //根据调号选图像
-        // 升，降
-        for (var i = 0; i < 2; i++) {
-          var new_button = document.createElement("button")
-          new_button.className = "option-button"
-          new_button.name = "answer1"
-          new_button.value = i
-          new_button.innerText = option3_text[i]
-          new_button.setAttribute("onclick", "hit_button()")
-          option_form_1.appendChild(new_button)
-        }
-
-        // 几个升降标记
-        for (var i = 0; i < 7; i++) {
-          var new_button = document.createElement("button")
-          new_button.className = "option-button"
-          new_button.name = "answer2"
-          new_button.value = i
-          new_button.innerText = (i + 1).toString()
-          new_button.setAttribute("onclick", "hit_button()")
-          option_form_2.appendChild(new_button)
+          gen_option_button("answer2", option_form_2, i, option2_text.charAt(i))
         }
       }
+      else if (type == 1) { //根据调号选图像
+        // 升，降
+        for (var i = 0; i < 2; i++) {
+          gen_option_button("answer1", option_form_1, i, option3_text[i])
+        }
+        // 几个升降标记
+        answer2 = "0"
+        gen_option_button("answer2", option_form_2, 0, "1").className = "option-button-focus"
+        for (var i = 1; i < 7; i++) {
+          gen_option_button("answer2", option_form_2, i, (i + 1).toString())
+        }
+      }
+    }
+
+    function gen_option_button(name, form, value, text) {
+      var new_button = document.createElement("button")
+      new_button.className = "option-button"
+      new_button.name = name
+      new_button.value = value
+      new_button.innerText = text
+      new_button.setAttribute("onclick", "hit_button()")
+      form.appendChild(new_button)
+      return new_button
     }
 
     // 选项按钮被点击时
@@ -223,13 +267,13 @@
       }
     }
 
-    function control_button_hit(){
+    function control_button_hit() {
       let me = event.target
-      if(control_button_status == 0){
+      if (control_button_status == 0) {
         gen_question()
         me.innerText = "CHECK"
         control_button_status = 1
-      }else if(control_button_status == 1){
+      } else if (control_button_status == 1) {
         check_answer()
         me.innerText = "NEXT"
         control_button_status = 0
@@ -238,20 +282,23 @@
 
   </script>
   <div style="height: 40vh;width: 100%;text-align: center;padding: auto;">
-    <p style="color:rgb(190, 190, 190);" >MoonTune Ver 2.3</p>
+    <p style="color:rgb(190, 190, 190);">MoonTune Ver 2.4</p>
     <img id="question-img" style="margin: auto;max-width: 170px;" src="./tuneImg/default.png">
     <p id="res_text"></p>
   </div>
-  <div style="height: 30vh;width: 100%;text-align: center;">
+  <div style="height: 35vh;width: 100%;text-align: center;">
+    <!-- <select id="question-set-select">
+      <option value="0">大调</option>
+      <option value="1">小调</option>
+      <option value="2">混合</option>
+    </select> -->
     <div id="option_form_1">
     </div>
-
     <hr />
-
     <div id="option_form_2">
     </div>
   </div>
-  <div style="height: 15vh;width: 100%;text-align: center;">
+  <div style="height: 10vh;width: 100%;text-align: center;">
     <button onclick="control_button_hit()" class="check-button">Let's GO ~</button>
   </div>
 </body>
