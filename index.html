@@ -118,9 +118,7 @@
       font-size: 20px;
       color: #87bdd7;
       margin: 2px;
-      height: 60px;
-      padding-left: 10px;
-      padding-right: 10px;
+      padding-left: 5px;
     }
 
     .set-button-selected {
@@ -130,9 +128,7 @@
       font-size: 20px;
       color: white;
       margin: 5px;
-      height: 70px;
-      padding-left: 10px;
-      padding-right: 10px;
+      padding-left: 5px;
     }
   </style>
 </head>
@@ -164,6 +160,7 @@
       }
       //加载JSON
       json_data = JSON.parse(json_str)
+      console.log(json_data)
       //设置默认set
       document.getElementById("default_set_button").onclick()
     };
@@ -322,8 +319,8 @@
       //console.log(question_set)
     }
   </script>
-  <div style="height: 35vh;width: 100%;text-align: center;padding: auto;">
-    <p style="color:rgb(190, 190, 190);">MoonTune Ver 3.0</p>
+  <div style="height: 25vh;width: 100%;text-align: center;padding: auto;">
+    <p style="color:rgb(190, 190, 190);">MoonTune Ver 3.1</p>
     <img id="question-img" style="margin: auto;max-width: 170px;" src="./tuneImg/default.png">
     <p id="question-text"></p>
     <p id="res_text"></p>
