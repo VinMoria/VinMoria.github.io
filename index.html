@@ -14,9 +14,7 @@
       font-size: 25px;
       color: #87bdd7;
       margin: 2px;
-      height: 60px;
-      padding-left: 10px;
-      padding-right: 10px;
+      padding: 10px;
       min-width: 60px;
     }
 
@@ -27,9 +25,7 @@
       font-size: 30px;
       color: white;
       margin: 5px;
-      height: 70px;
-      padding-left: 10px;
-      padding-right: 10px;
+      padding: 10px;
       min-width: 60px;
     }
 
@@ -40,9 +36,7 @@
       font-size: 25px;
       color: white;
       margin: 5px;
-      height: 70px;
-      padding-left: 10px;
-      padding-right: 10px;
+      padding: 10px;
       min-width: 60px;
     }
 
@@ -53,9 +47,7 @@
       font-size: 30px;
       color: white;
       margin: 5px;
-      height: 70px;
-      padding-left: 10px;
-      padding-right: 10px;
+      padding: 10px;
       min-width: 60px;
     }
 
@@ -107,8 +99,8 @@
     .option-form {
       border: solid 1px #93b5cf;
       border-radius: 5px;
-      margin: 15px;
-      padding: 15px
+      margin: 5px;
+      padding: 5px
     }
 
     .set-button-default {
@@ -319,9 +311,9 @@
       //console.log(question_set)
     }
   </script>
-  <div style="height: 25vh;width: 100%;text-align: center;padding: auto;">
-    <p style="color:rgb(190, 190, 190);">MoonTune Ver 3.1</p>
-    <img id="question-img" style="margin: auto;max-width: 170px;" src="./tuneImg/default.png">
+  <div style="width: 100%;text-align: center;">
+    <p style="color:rgb(190, 190, 190);">MoonTune Ver 3.2</p>
+    <img id="question-img" style="width: 170px;" src="./tuneImg/default.png">
     <p id="question-text"></p>
     <p id="res_text"></p>
   </div>
@@ -330,14 +322,14 @@
       class="set-button-default">大调</button>
     <button name="set-button" value=1 onclick="set_button_hit()" class="set-button-default">小调</button>
   </div>
-  <div id="form_div" style="height: 35vh;width: 100%;text-align: center;">
+  <div id="form_div" style="width: 100%;text-align: center;">
     <div id="option_form_1">
     </div>
     <hr />
     <div id="option_form_2">
     </div>
   </div>
-  <div style="height: 10vh;width: 100%;text-align: center;">
+  <div style="width: 100%;text-align: center;">
     <button onclick="control_button_hit()" class="check-button">Let's GO ~</button>
   </div>
 </body>
