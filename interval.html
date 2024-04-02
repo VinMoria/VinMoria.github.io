@@ -122,6 +122,16 @@
       margin: 5px;
       padding-left: 5px;
     }
+
+    .right-answer-text{
+      border-radius: 10px;
+      background-color: #2f90b9;
+      border: solid 3px #2f90b9;
+      font-size: 30px;
+      color: white;
+      margin: 5px;
+      padding: 5px;
+    }
   </style>
 </head>
 
@@ -150,13 +160,28 @@
     const up_n_down_texts = ["\u266d", "", "\u266f"]
     const direction_texts = ["下行", "上行"]
 
-    const bias_texts = ["重降", "\u266d", "", "\u266f", "重升"]
+    const bias_texts = ["\u266d\u266d", "\u266d", "", "\u266f", "\u266f\u266f"]
+
+    var right_answers = []
+
+    var my_answers = []
+
+    var control_button_status = 0
+
+    var right_answer_text = ""
+
     window.onload = function () {
 
     };
 
 
     function gen_one_question() {
+      //将正确错误信息提示清除
+      document.getElementById("question-img").src = ""
+      document.getElementById("res_text").innerText = ""
+      document.getElementById("res_text").className = ""
+      document.getElementById("right-answer-text").innerText = ""
+      document.getElementById("right-answer-text").className = ""
       console.log("----------------------")
       // 随机原音
       var origin_up_n_down = Math.floor(Math.random() * 3)
@@ -182,24 +207,104 @@
       question_texts.innerText = up_n_down_texts[origin_up_n_down] +
         String.fromCharCode(65 + origin_note_no) +
         " " +
-        direction_texts[direction] + " "+
-        interval_texts[interval_no] +
-        " = " +
-        bias_texts[bias * 2 + 2] +
-        String.fromCharCode(65 + (origin_note_no + (direction - 0.5) * 2 * intervel_name_values[interval_no] + 7) % 7)
+        direction_texts[direction] + " " +
+        interval_texts[interval_no]
+      right_answer_text = bias_texts[bias * 2 + 2] + String.fromCharCode(65 + (origin_note_no + (direction - 0.5) * 2 * intervel_name_values[interval_no] + 7) % 7)
+      right_answers = [bias * 2 + 2, (origin_note_no + (direction - 0.5) * 2 * intervel_name_values[interval_no] + 7) % 7]
+      my_answers = [-1, -1]
+      gen_option()
 
-    }    
+    }
+
+    function gen_option() {
+      let form1 = document.getElementById("option_form_1")
+      let form2 = document.getElementById("option_form_2")
+      form1.innerHTML = ""
+      form2.innerHTML = ""
+      for (var i = 0; i < 5; i++) {
+        var new_button = document.createElement("button")
+        new_button.className = "option-button"
+        new_button.name = "answer0"
+        new_button.value = i
+        new_button.innerText = bias_texts[i]
+        new_button.setAttribute("onclick", "hit_option()")
+        form1.appendChild(new_button)
+        if(i == 2){
+          new_button.click()
+        }
+      }
+
+      for (var i = 0; i < 7; i++) {
+        var new_button = document.createElement("button")
+        new_button.className = "option-button"
+        new_button.name = "answer1"
+        new_button.value = i
+        new_button.innerText = String.fromCharCode(i + 65)
+        new_button.setAttribute("onclick", "hit_option()")
+        form2.appendChild(new_button)
+      }
+
+    }
+
+    // 选项按钮被点击时
+    function hit_option() {
+      let me = event.target
+      // 设置选中样式，重置其他选项的样式
+      let name_group = document.getElementsByName(me.name)
+      for (var i = 0, length = name_group.length; i < length; i++) {
+        name_group[i].className = "option-button"
+      }
+      me.className = "option-button-focus"
+
+      // 设置answer
+      my_answers[parseInt(me.name.slice(6))] = me.value
+    }
+
+    // 检查答案是否正确
+    function check_answer() {
+      console.log("答案对比:", my_answers, right_answers)
+      //检查答案是否正确
+      var is_right = true
+      for (var i = 0; i < right_answers.length; i++) {
+        //console.log("compare: ", my_answers, right_answers)
+        if (my_answers[i] != right_answers[i]) {
+          is_right = false
+          break
+        }
+      }
+      //设置结果文本
+      if (is_right) {
+        document.getElementById("res_text").innerText = "答对了(๑•̀ㅂ•́)و✧"
+        document.getElementById("res_text").className = "right-text"
+      } else {
+        document.getElementById("res_text").innerText = "不太对捏(⊙﹏⊙)"
+        document.getElementById("res_text").className = "wrong-text"
+      }
+
+      //显示答案
+      document.getElementById("right-answer-text").innerText = "答案是："+right_answer_text
+      document.getElementById("right-answer-text").className = "right-answer-text"
+    }
+
+    function control_button_hit() {
+      let me = event.target
+      if (control_button_status == 0) {
+        gen_one_question()
+        me.innerText = "CHECK"
+        control_button_status = 1
+      } else if (control_button_status == 1) {
+        check_answer()
+        me.innerText = "NEXT"
+        control_button_status = 0
+      }
+    }
   </script>
   <div style="width: 100%;text-align: center;">
-    <p style="color:rgb(190, 190, 190);">音程 Ver 0.1</p>
+    <p style="color:rgb(190, 190, 190);">音程 Ver 1.0</p>
     <img id="question-img" style="width: 170px;" src="./tuneImg/default.png">
     <p id="question-text"></p>
+    <p id="right-answer-text"></p>
     <p id="res_text"></p>
-  </div>
-  <div style="width: 100%;text-align: center;">
-    <button id="default_set_button" name="set-button" value=0 onclick="set_button_hit()"
-      class="set-button-default">大调</button>
-    <button name="set-button" value=1 onclick="set_button_hit()" class="set-button-default">小调</button>
   </div>
   <div id="form_div" style="width: 100%;text-align: center;">
     <div id="option_form_1">
@@ -209,7 +314,7 @@
     </div>
   </div>
   <div style="width: 100%;text-align: center;position: fixed;bottom: 10px;">
-    <button onclick="gen_one_question()" class="check-button">Let's GO ~</button>
+    <button onclick="control_button_hit()" class="check-button">Let's GO ~</button>
   </div>
 </body>
 
