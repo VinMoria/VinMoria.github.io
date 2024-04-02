@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8">
+  <link rel="icon" href="./favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MoonTune</title>
+  <style>
+    .option-button {
+      border-radius: 10px;
+      background-color: white;
+      border: solid 2px #87bdd7;
+      font-size: 25px;
+      color: #87bdd7;
+      margin: 2px;
+      padding: 10px;
+      min-width: 60px;
+    }
+
+    .option-button-focus {
+      border-radius: 10px;
+      background-color: #2f90b9;
+      border: solid 2px #2f90b9;
+      font-size: 25px;
+      color: white;
+      margin: 2px;
+      padding: 10px;
+      min-width: 60px;
+    }
+
+    .wrong-option {
+      border-radius: 10px;
+      background-color: #c15a5a;
+      border: solid 2px #c15a5a;
+      font-size: 25px;
+      color: white;
+      margin: 2px;
+      padding: 10px;
+      min-width: 60px;
+    }
+
+    .right-option {
+      border-radius: 10px;
+      background-color: #9dce61;
+      border: solid 2px #9dce61;
+      font-size: 25px;
+      color: white;
+      margin: 2px;
+      padding: 10px;
+      min-width: 60px;
+    }
+
+    .check-button {
+      border-radius: 60px;
+      background-color: #f7936c;
+      border: 0px;
+      font-size: 25px;
+      color: white;
+      margin: 5px;
+      height: 70px;
+      width: 80%;
+    }
+
+    .right-text {
+      border-radius: 5px;
+      background-color: #9dce61;
+      font-size: 20px;
+      color: white;
+      margin: 10px;
+      padding: 5px;
+    }
+
+    .wrong-text {
+      border-radius: 5px;
+      background-color: #c15a5a;
+      font-size: 20px;
+      color: white;
+      margin: 10px;
+      padding: 5px;
+    }
+
+    #question-set-select {
+      border: #93b5cf 1px solid;
+      color: #93b5cf;
+      border-radius: 10px;
+      font-size: 20px;
+      padding: 10px;
+      max-width: 400px;
+      outline: none;
+      margin: 10px;
+    }
+
+    #question-text {
+      font-size: 40px;
+      color: #5e7987;
+    }
+
+    .option-form {
+      border: solid 1px #93b5cf;
+      border-radius: 5px;
+      margin: 5px;
+      padding: 5px
+    }
+
+    .set-button-default {
+      border-radius: 10px;
+      background-color: white;
+      border: solid 2px #87bdd7;
+      font-size: 20px;
+      color: #87bdd7;
+      margin: 2px;
+      padding-left: 5px;
+    }
+
+    .set-button-selected {
+      border-radius: 10px;
+      background-color: #2f90b9;
+      border: solid 3px #2f90b9;
+      font-size: 20px;
+      color: white;
+      margin: 5px;
+      padding-left: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script>
+    const interval_texts = [
+      "小二度",
+      "大二度",
+      "小三度",
+      "大三度",
+      "纯四度",
+      "增四度",
+      "减五度",
+      "纯五度",
+      "小六度",
+      "大六度",
+      "小七度",
+      "大七度",
+    ]
+    const intervel_name_values = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6]
+    const interval_values = [0.5, 1, 1.5, 2, 2.5, 3, 3, 3.5, 4, 4.5, 5, 5.5]
+
+    const standard_note_value = [0, 1, 1.5, 2.5, 3.5, 4, 5]
+
+    const up_n_down_texts = ["\u266d", "", "\u266f"]
+    const direction_texts = ["下行", "上行"]
+
+    const bias_texts = ["重降", "\u266d", "", "\u266f", "重升"]
+    window.onload = function () {
+
+    };
+
+
+    function gen_one_question() {
+      console.log("----------------------")
+      // 随机原音
+      var origin_up_n_down = Math.floor(Math.random() * 3)
+      var origin_note_no = Math.floor(Math.random() * 7)
+      console.log("随机原音", "升降:", origin_up_n_down, "/音：", origin_note_no)
+
+      //计算原音值
+      var origin_value = standard_note_value[origin_note_no] + 0.5 * (origin_up_n_down - 1)
+      console.log("原音值:", origin_value)
+      //随机偏移量
+      var direction = Math.floor(Math.random() * 2)
+      var interval_no = Math.floor(Math.random() * 12)
+      console.log("随机偏移", "方向:", direction, "/No.：", interval_no)
+
+      var res_note_value = (origin_value + (direction - 0.5) * 2 * (interval_values[interval_no]) + 6) % 6
+      var res_name_value = standard_note_value[(origin_note_no + (direction - 0.5) * 2 * intervel_name_values[interval_no] + 7) % 7]
+      console.log("结果", "实际值:", res_note_value, "/名称值：", res_name_value)
+
+      let question_texts = document.getElementById("question-text")
+      let bias = (res_note_value - res_name_value)
+      if (bias > 1) { bias -= 6 }
+      else if (bias < -1) { bias += 6 }
+      question_texts.innerText = up_n_down_texts[origin_up_n_down] +
+        String.fromCharCode(65 + origin_note_no) +
+        " " +
+        direction_texts[direction] + " "+
+        interval_texts[interval_no] +
+        " = " +
+        bias_texts[bias * 2 + 2] +
+        String.fromCharCode(65 + (origin_note_no + (direction - 0.5) * 2 * intervel_name_values[interval_no] + 7) % 7)
+
+    }    
+  </script>
+  <div style="width: 100%;text-align: center;">
+    <p style="color:rgb(190, 190, 190);">音程 Ver 0.1</p>
+    <img id="question-img" style="width: 170px;" src="./tuneImg/default.png">
+    <p id="question-text"></p>
+    <p id="res_text"></p>
+  </div>
+  <div style="width: 100%;text-align: center;">
+    <button id="default_set_button" name="set-button" value=0 onclick="set_button_hit()"
+      class="set-button-default">大调</button>
+    <button name="set-button" value=1 onclick="set_button_hit()" class="set-button-default">小调</button>
+  </div>
+  <div id="form_div" style="width: 100%;text-align: center;">
+    <div id="option_form_1">
+    </div>
+    <hr />
+    <div id="option_form_2">
+    </div>
+  </div>
+  <div style="width: 100%;text-align: center;position: fixed;bottom: 10px;">
+    <button onclick="gen_one_question()" class="check-button">Let's GO ~</button>
+  </div>
+</body>
+
+</html>
