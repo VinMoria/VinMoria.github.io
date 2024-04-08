@@ -166,12 +166,12 @@
 
     var my_answers = []
 
-    var control_button_status = 0
+    var control_button_status = 1
 
     var right_answer_text = ""
 
     window.onload = function () {
-
+      gen_one_question()
     };
 
 
@@ -314,7 +314,7 @@
     </div>
   </div>
   <div style="width: 100%;text-align: center;position: fixed;bottom: 10px;">
-    <button onclick="control_button_hit()" class="check-button">Let's GO ~</button>
+    <button onclick="control_button_hit()" class="check-button">CHECK</button>
   </div>
 </body>
 
